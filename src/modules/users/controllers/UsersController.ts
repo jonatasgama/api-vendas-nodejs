@@ -11,8 +11,8 @@ export default class UsersController {
     return res.json(users);
   }
 
-  public async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, password } = req.body;
+  public async create(request: Request, response: Response): Promise<Response> {
+    const { name, email, password } = request.body;
 
     const createUser = new CreateUserService();
 
@@ -22,6 +22,6 @@ export default class UsersController {
       password,
     });
 
-    return res.json(user);
+    return response.json(user);
   }
 }
