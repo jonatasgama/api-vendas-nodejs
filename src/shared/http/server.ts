@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import { errors } from 'celebrate';
@@ -17,23 +17,21 @@ app.use(routes);
 
 app.use(errors());
 
-app.use(
-  (error: Error, request: Request, response: Response, next: NextFunction) => {
-    if (error instanceof AppError) {
-      return response.status(error.statusCode).json({
-        status: 'erro',
-        message: error.message,
-      });
-    }
-
-    console.log(error);
-
-    return response.status(500).json({
+app.use((error: Error, request: Request, response: Response) => {
+  if (error instanceof AppError) {
+    return response.status(error.statusCode).json({
       status: 'erro',
-      message: 'Internal server error',
+      message: error.message,
     });
-  },
-);
+  }
+
+  console.log(error);
+
+  return response.status(500).json({
+    status: 'erro',
+    message: 'Internal server error',
+  });
+});
 
 const port = 3333;
 app.listen(port, () => {
