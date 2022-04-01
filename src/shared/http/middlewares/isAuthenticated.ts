@@ -17,7 +17,7 @@ export default function isAuthenticated(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AppError('Token JWT inválido');
+    throw new AppError('Não existe Token JWT');
   }
 
   //o cabeçalho vem no formato: Bearer ahgfua6rfagsf5fdqg3vj6du6
